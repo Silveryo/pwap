@@ -1,9 +1,7 @@
 import { Entity, BaseEntity, Column, CreateDateColumn, UpdateDateColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import {
-    Length,
-    IsEmail,
-} from "class-validator"
+import { Length, IsEmail } from "class-validator"
 import { Task } from "./Task";
+
 
 @Entity('user')
 export class User extends BaseEntity {
@@ -13,9 +11,6 @@ export class User extends BaseEntity {
     @OneToMany(() => Task, (task) => task.user)
     tasks: Task[]
 
-    @Column({
-        unique: true,
-    })
     @Length(3)
     name: string;
 
@@ -24,6 +19,9 @@ export class User extends BaseEntity {
     })
     @IsEmail()
     email: string;
+
+    @Column()
+    password: string;
 
     @CreateDateColumn()
     created_at: Date;

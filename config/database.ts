@@ -10,4 +10,3 @@ export const AppDataSource = new DataSource({
     entities: ["./App/Entities/*"],
     synchronize: true,
 });
-

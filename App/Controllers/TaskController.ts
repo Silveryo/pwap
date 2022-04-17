@@ -3,8 +3,7 @@ import { Task } from '../Entities/Task';
 import { Request, Response } from 'express';
 
 export const getTasks = async (req: Request, res: Response) => {
-    const { userId } = req.params;
-
+    const { userId, password } = req.params;
     const user = await User.findOne({
         join: {
             alias: "user",
@@ -23,17 +22,28 @@ export const getTasks = async (req: Request, res: Response) => {
         })
     }
 
+    if (password != user.password) {
+        return res.send({
+            msg: "Failed to authenticate.",
+        })
+    }
+
     return res.json(user.tasks);
 }
 
 export const createTask = async (req: Request, res: Response) => {
-    const { userId } = req.params;
-
+    const { userId, password } = req.params;
     const user = await User.findOne({ where: { id: parseInt(userId) } });
 
     if (!user) {
         return res.send({
             msg: "User not found.",
+        })
+    }
+
+    if (password != user.password) {
+        return res.send({
+            msg: "Failed to authenticate.",
         })
     }
 
@@ -54,12 +64,25 @@ export const createTask = async (req: Request, res: Response) => {
 }
 
 export const updateTaskStatus = async (req: Request, res: Response) => {
-    const { userId, taskId } = req.params;
-
+    const { userId, taskId, password } = req.params;
     const task = await Task.findOne({ where: { id: parseInt(taskId) } });
+    const user = await User.findOne({ where: { id: parseInt(userId) } });
 
     if (!task) {
         return res.send(`Task (id = ${taskId}) doesn't exist.`)
+    }
+
+
+    if (!user) {
+        return res.send({
+            msg: "User not found.",
+        })
+    }
+
+    if (password != user.password) {
+        return res.send({
+            msg: "Failed to authenticate.",
+        })
     }
 
     task.is_completed = !task.is_completed;
@@ -69,9 +92,21 @@ export const updateTaskStatus = async (req: Request, res: Response) => {
 }
 
 export const deleteTask = async (req: Request, res: Response) => {
-    const { userId, taskId } = req.params;
-
+    const { userId, taskId, password } = req.params;
     const task = await Task.findOne({ where: { id: parseInt(taskId) } });
+    const user = await User.findOne({ where: { id: parseInt(userId) } });
+
+    if (!user) {
+        return res.send({
+            msg: "User not found.",
+        })
+    }
+
+    if (password != user.password) {
+        return res.send({
+            msg: "Failed to authenticate.",
+        })
+    }
 
     if (!task) {
         return res.send(`Task (id = ${taskId}) doesn't exist.`)

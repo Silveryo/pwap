@@ -1,23 +1,31 @@
-GET http://localhost:2222/api/user/2/tasks HTTP/1.1
+GET http://localhost:2222/api/user/2/tasks/447d10d0-1071-4637-a825-70f6d1cb32ef/ HTTP/1.1
 
 ###
 
-POST http://localhost:2222/api/user/2/tasks HTTP/1.1
+POST http://localhost:2222/api/user/2/tasks/447d10d0-1071-4637-a825-70f6d1cb32ef/ HTTP/1.1
 content-type: application/json
 
 {
     "name": "POSTed Task",
-    "description": "Todo everything but a little less",
-    "user": 2
+    "description": "Todo everything but a little less"
 }
 
 ###
-PUT http://localhost:2222/api/user/2/tasks/3 HTTP/1.1
+
+POST http://localhost:2222/api/user/5/tasks/5716556e-5098-4735-823b-5c9c5f986d16/ HTTP/1.1
 content-type: application/json
 
 {
-
+    "name": "POSTed Task",
+    "description": "Todo everything but a little less"
 }
+
+###
+PUT http://localhost:2222/api/user/2/tasks/8/447d10d0-1071-4637-a825-70f6d1cb32ef/ HTTP/1.1
+
+###
+
+DELETE http://localhost:2222/api/user/2/tasks/4/447d10d0-1071-4637-a825-70f6d1cb32ef/ HTTP/1.1
 
 ###
 
@@ -26,11 +34,7 @@ content-type: application/json
 
 {
     "name": "Zdeněk",
-    "email": "silverdaboss@gmail.com"
+    "email": "bbb@gmail.com"
 }
-
-###
-
-DELETE http://localhost:2222/api/user/2/tasks/4 HTTP/1.1
 
 ###
