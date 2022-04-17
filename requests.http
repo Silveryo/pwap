@@ -1,0 +1,36 @@
+GET http://localhost:2222/api/user/2/tasks HTTP/1.1
+
+###
+
+POST http://localhost:2222/api/user/2/tasks HTTP/1.1
+content-type: application/json
+
+{
+    "name": "POSTed Task",
+    "description": "Todo everything but a little less",
+    "user": 2
+}
+
+###
+PUT http://localhost:2222/api/user/2/tasks/3 HTTP/1.1
+content-type: application/json
+
+{
+
+}
+
+###
+
+POST http://localhost:2222/ HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Zdeněk",
+    "email": "silverdaboss@gmail.com"
+}
+
+###
+
+DELETE http://localhost:2222/api/user/2/tasks/4 HTTP/1.1
+
+###
