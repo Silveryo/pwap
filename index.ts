@@ -1,5 +1,5 @@
 import { AppDataSource } from './config/database';
-import express, { application } from "express";
+import express from "express";
 import { apiRouter } from './routes/api';
 import { webRouter } from './routes/web';
 

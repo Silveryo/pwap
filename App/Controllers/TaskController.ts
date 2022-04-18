@@ -1,6 +1,7 @@
 import { User } from '../Entities/User';
 import { Task } from '../Entities/Task';
 import { Request, Response } from 'express';
+import { AppDataSource } from '../../config/database';
 
 export const getTasks = async (req: Request, res: Response) => {
     const { userId, password } = req.params;
@@ -12,7 +13,7 @@ export const getTasks = async (req: Request, res: Response) => {
             }
         },
         where: {
-            id: parseInt(userId)
+            id: parseInt(userId),
         }
     });
 
@@ -29,6 +30,56 @@ export const getTasks = async (req: Request, res: Response) => {
     }
 
     return res.json(user.tasks);
+}
+
+export const getCompletedTasks = async (req: Request, res: Response) => {
+    const { userId, password } = req.params;
+
+    const data = await AppDataSource.manager
+        .createQueryBuilder(User, "user")
+        .leftJoinAndSelect("user.tasks", 'task')
+        .where("user.id = :id", {id: userId})
+        .andWhere("task.is_completed = :is_completed", {is_completed: true})
+        .getOne();
+
+    if (!data) {
+        return res.send({
+            msg: "Data not found.",
+        })
+    }
+
+    if (password != data.password) {
+        return res.send({
+            msg: "Failed to authenticate.",
+        })
+    }
+
+    return res.json(data.tasks);
+}
+
+export const getIncompleteTasks = async (req: Request, res: Response) => {
+    const { userId, password } = req.params;
+
+    const data = await AppDataSource.manager
+        .createQueryBuilder(User, "user")
+        .leftJoinAndSelect("user.tasks", 'task')
+        .where("user.id = :id", {id: userId})
+        .andWhere("task.is_completed = :is_completed", {is_completed: false})
+        .getOne();
+
+    if (!data) {
+        return res.send({
+            msg: "Data not found.",
+        })
+    }
+
+    if (password != data.password) {
+        return res.send({
+            msg: "Failed to authenticate.",
+        })
+    }
+
+    return res.json(data.tasks);
 }
 
 export const createTask = async (req: Request, res: Response) => {
