@@ -111,7 +111,7 @@ export const createTask = async (req: Request, res: Response) => {
 
     await task.save();
 
-    return res.json(task);
+    return res.status(201).json(task);
 }
 
 export const updateTaskStatus = async (req: Request, res: Response) => {
