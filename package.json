@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "dev": "nodemon --exec npx ts-node index.ts",
-    "start": "ts-node index.ts"
+    "build": "tsc",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "Zdeněk Odehnal",
