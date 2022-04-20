@@ -17,5 +17,7 @@ export const AppDataSource = new DataSource({
     database: client.database,
     entities: ["./App/Entities/*"],
     synchronize: true,
-    ssl: true,
+    extra: {
+        ssl: true,
+    }
 });
