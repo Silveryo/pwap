@@ -2,7 +2,7 @@ import { DataSource } from "typeorm";
 import { Client } from "pg";
 
 const client = new Client({
-    connectionString:process.env.DATABASE_URL,
+    connectionString: process.env.DATABASE_URL,
     ssl: {
         rejectUnauthorized: false,
     },
@@ -17,4 +17,5 @@ export const AppDataSource = new DataSource({
     database: client.database,
     entities: ["./App/Entities/*"],
     synchronize: true,
+    ssl: true,
 });
