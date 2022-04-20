@@ -1,7 +1,6 @@
 import { User } from "../Entities/User";
 import { Request, Response } from 'express';
-
-const uuidv4 = require('uuid');
+import generatePassword from './../Helpers/generatePassword';
 
 export const createUser = async (req: Request, res: Response) => {
     const {
@@ -14,7 +13,7 @@ export const createUser = async (req: Request, res: Response) => {
     const user: User = User.create({
         name,
         email,
-        password: uuidv4()
+        password: generatePassword(16)
     });
 
     if (!user) {
